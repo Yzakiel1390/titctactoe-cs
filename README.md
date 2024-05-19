@@ -1,2 +1,2 @@
 # titctactoe-cs
- A simple C# console Tic Tac Toe game.
+ A simple C# console Tic-Tac-Toe game.
