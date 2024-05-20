@@ -3,10 +3,10 @@ using System.Linq;
 
 namespace TicTacToe
 {
-    class Player
+    enum Player
     {
-        public static char X = 'X';
-        public static char O = 'O';
+        X = 'X',
+        O = 'O'
     }
 
     class TicTacToe
@@ -18,26 +18,27 @@ namespace TicTacToe
                 {' ', ' ', ' '},
                 {' ', ' ', ' '}
             };
-            Console.WriteLine("\u001b[33mPlayer 1 [O or X]: \u001b[m\u001b[32m");
-            char player = Convert.ToChar(Console.ReadLine());
-            while (player != Player.O && player != Player.X)
+            Console.Write("\u001b[33mPlayer 1 [O or X]: \u001b[m\u001b[32m");
+            char player = Convert.ToChar(Console.ReadLine().ToUpper());
+            while (!Enum.IsDefined(typeof(Player), (int)player))
             {
-                Console.WriteLine("\u001b[33mPlayer 1 [O or X]: \u001b[m\u001b[32m");
-                player = Convert.ToChar(Console.ReadLine());
+                Console.Write("\u001b[33mPlayer 1 [O or X]: \u001b[m\u001b[32m");
+                player = Convert.ToChar(Console.ReadLine().ToUpper());
             }
 
             bool loopCompleted = true;
+            short play;
             for (int i = 0; i < 9; i++)
             {
                 PrintGame(board);
 
-                Console.WriteLine("\u001b[34m- Enter a location \u001b[m\u001b[31m(1-9)\u001b[m\u001b[34m: \u001b[m\u001b[32m");
-                short play = (short)(Convert.ToInt16(Console.ReadLine()) - 1);
+                Console.Write("\u001b[34m- Enter a location \u001b[m\u001b[31m(1-9)\u001b[m\u001b[34m: \u001b[m\u001b[32m");
+                play = (short)(Convert.ToInt16(Console.ReadLine()) - 1);
 
                 while (!ValidLocal(board, play))
                 {
                     Console.WriteLine("\u001b[31mInvalid location, please try again.\u001b[m");
-                    Console.WriteLine("\u001b[34m- Enter a location \u001b[m\u001b[31m(1-9)\u001b[m\u001b[34m: \u001b[m\u001b[32m");
+                    Console.Write("\u001b[34m- Enter a location \u001b[m\u001b[31m(1-9)\u001b[m\u001b[34m: \u001b[m\u001b[32m");
                     play = (short)(Convert.ToInt16(Console.ReadLine()) - 1);
                 }
 
@@ -49,7 +50,7 @@ namespace TicTacToe
                     loopCompleted = false;
                     break;
                 }
-                player = player == Player.X ? Player.O : Player.X;
+                player = player == (char)Player.X ? (char)Player.O : (char)Player.X;
             }
 
             if (loopCompleted)
@@ -80,11 +81,11 @@ namespace TicTacToe
             return 9 > play && play >= 0 && board[play / 3, play % 3] == ' ';
         }
 
-        public static void PrintGame(char[,] borad)
+        public static void PrintGame(char[,] board)
         {
             for (int row = 0; row < 3; row++)
             {
-                Console.WriteLine($"\u001b[30m{string.Join(" | ", Enumerable.Range(0, 3).Select(col => borad[row, col]))}\u001b[m");
+                Console.WriteLine($"\u001b[30m{string.Join(" | ", Enumerable.Range(0, 3).Select(col => board[row, col]))}\u001b[m");
                 Console.WriteLine($"\u001b[30m{string.Concat(Enumerable.Repeat("-", 9))}\u001b[m");
             }
         }
