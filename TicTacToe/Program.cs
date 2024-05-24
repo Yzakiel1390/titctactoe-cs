@@ -18,13 +18,12 @@ namespace TicTacToe
                 {' ', ' ', ' '},
                 {' ', ' ', ' '}
             };
-            Console.Write("\u001b[33mPlayer 1 [O or X]: \u001b[m\u001b[32m");
-            char player = Convert.ToChar(Console.ReadLine().ToUpper());
-            while (!Enum.IsDefined(typeof(Player), (int)player))
+            char player;
+            do
             {
                 Console.Write("\u001b[33mPlayer 1 [O or X]: \u001b[m\u001b[32m");
                 player = Convert.ToChar(Console.ReadLine().ToUpper());
-            }
+            } while (!Enum.IsDefined(typeof(Player), (int)player));
 
             bool loopCompleted = true;
             short play;
